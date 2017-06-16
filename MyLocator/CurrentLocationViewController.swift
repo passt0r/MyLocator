@@ -201,7 +201,7 @@ class CurrentLocationViewControler: UIViewController, CLLocationManagerDelegate 
             return
         }
         
-        var distance = CLLocationDistance(DBL_MAX)
+        var distance = CLLocationDistance(Double.greatestFiniteMagnitude)
         if let location = location {
             distance = newLocation.distance(from: location)
         }
@@ -245,6 +245,15 @@ class CurrentLocationViewControler: UIViewController, CLLocationManagerDelegate 
                 }
             }
             
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TagLocation" {
+            let destinationNavController = segue.destination as! UINavigationController
+            let destination = destinationNavController.topViewController as! LocationDetailTableViewController
+            destination.coorditate = location!.coordinate
+            destination.placemark = placemark
         }
     }
 
