@@ -37,7 +37,12 @@ class LocationDetailTableViewController: UITableViewController {
     }
     
     @IBAction func done() {
-        dismiss(animated: true, completion: nil)
+        let hud = HudView.hud(inView: navigationController!.view, animated: true)
+        hud.text = "Tagged"
+        afterDelay(0.6) {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     //MARK: - Methods
@@ -93,6 +98,7 @@ class LocationDetailTableViewController: UITableViewController {
         dateLabel.text = format(date: Date())
         
         let gestueRecogniser = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        //If gestueRecogniser exist in TableView with "true" at this property, tableView will not recognise self tap on cell
         gestueRecogniser.cancelsTouchesInView = false
         tableView.addGestureRecognizer(gestueRecogniser)
         // Uncomment the following line to preserve selection between presentations
