@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 //Globals are always lazy properties
 private let dateFormatter: DateFormatter = {
@@ -30,6 +31,9 @@ class LocationDetailTableViewController: UITableViewController {
     var coorditate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var placemark: CLPlacemark?
     var categoryName = "No Category"
+    var date = Date()
+    
+    var managedObgectContext: NSManagedObjectContext!
     
     //MARK: - Actions
     @IBAction func cancel() {
@@ -39,10 +43,25 @@ class LocationDetailTableViewController: UITableViewController {
     @IBAction func done() {
         let hud = HudView.hud(inView: navigationController!.view, animated: true)
         hud.text = "Tagged"
-        afterDelay(0.6) {
-            self.dismiss(animated: true, completion: nil)
-        }
         
+        let location = Location(context: managedObgectContext)
+        
+        location.locationDescription = descriptionTextView.text
+        location.category = categoryName
+        location.latitude = coorditate.latitude
+        location.longtitude = coorditate.longitude
+        location.date = date
+        location.placemark = placemark
+        
+        do {
+            try managedObgectContext.save()
+            
+            afterDelay(0.6) {
+                self.dismiss(animated: true, completion: nil)
+            }
+        } catch {
+            fatalCoreDataError(error)
+        }
     }
     
     //MARK: - Methods
@@ -95,7 +114,7 @@ class LocationDetailTableViewController: UITableViewController {
         } else {
             adressLabel.text = "No Adress Found"
         }
-        dateLabel.text = format(date: Date())
+        dateLabel.text = format(date: date)
         
         let gestueRecogniser = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         //If gestueRecogniser exist in TableView with "true" at this property, tableView will not recognise self tap on cell

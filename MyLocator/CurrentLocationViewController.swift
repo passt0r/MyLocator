@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 class CurrentLocationViewControler: UIViewController, CLLocationManagerDelegate {
     
@@ -31,6 +32,8 @@ class CurrentLocationViewControler: UIViewController, CLLocationManagerDelegate 
     var lastGeocodingError: Error?
     
     var timer: Timer?
+    
+    var managedObgectContext: NSManagedObjectContext!
     
     //MARK: - Actions
     @IBAction func getLocation() {
@@ -254,6 +257,7 @@ class CurrentLocationViewControler: UIViewController, CLLocationManagerDelegate 
             let destination = destinationNavController.topViewController as! LocationDetailTableViewController
             destination.coorditate = location!.coordinate
             destination.placemark = placemark
+            destination.managedObgectContext = managedObgectContext
         }
     }
 

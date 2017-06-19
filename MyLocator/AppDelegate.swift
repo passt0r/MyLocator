@@ -7,15 +7,59 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    lazy var persistContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.loadPersistentStores(completionHandler: { storeDescription, error in
+            if let error = error {
+                fatalError("Could load data store: \(error)")
+            }
+        })
+        return container
+    }()
+    
+    lazy var managedObjectContext: NSManagedObjectContext = self.persistContainer.viewContext
+    
+    func listenForFatalCoreDataENotofication() {
+        NotificationCenter.default.addObserver(forName: MyMannagedObjectContextSaveDidFailNotification, object: nil, queue: OperationQueue.main, using: { notification in
+            
+            let alert = UIAlertController(title: "Internal alert",
+                                          message: "There was a fatal error in the app and we cannot continue\n\n" +
+                                            "Press OK to terminate the app. Sorry for the inconvenience",
+                                          preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: {_ in
+                let exeption = NSException(name: NSExceptionName.internalInconsistencyException, reason: "Fatal Core Data error", userInfo: nil)
+                exeption.raise()
+            })
+            alert.addAction(action)
+            self.viewControllerForShowingAlert().present(alert, animated: true, completion: nil)
+        })
+    }
+    
+    func viewControllerForShowingAlert() -> UIViewController {
+        let rootViewController = self.window!.rootViewController!
+        if let presentedViewController = rootViewController.presentedViewController {
+            return presentedViewController
+        } else {
+            return rootViewController
+        }
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let tabBarController = window?.rootViewController as! UITabBarController
+        if let tabBarViewControllers = tabBarController.viewControllers {
+            let currentLocationViewController = tabBarViewControllers[0] as! CurrentLocationViewControler
+            currentLocationViewController.managedObgectContext = managedObjectContext
+        }
+        listenForFatalCoreDataENotofication()
         return true
     }
 

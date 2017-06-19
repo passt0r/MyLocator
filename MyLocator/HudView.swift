@@ -12,6 +12,8 @@ class HudView: UIView {
     var text = ""
     
     override func draw(_ rect: CGRect) {
+        
+        //MARK: - Hud covers ALL view, this draw only set value to centrall part of all hud
         let boxWidth: CGFloat = 96
         let boxHeight: CGFloat = 96
         //MARK: - HudBox setup
