@@ -33,6 +33,21 @@ class LocationDetailTableViewController: UITableViewController {
     var categoryName = "No Category"
     var date = Date()
     
+    
+    //called when perform prepare(for segue), after viewDidLoad, so didSet perform action
+    var locationToEdit: Location? {
+        didSet {
+            if let location = locationToEdit {
+                descriptionText = location.locationDescription
+                categoryName = location.category
+                date = location.date
+                coorditate = CLLocationCoordinate2DMake(location.latitude, location.longtitude)
+                placemark = location.placemark
+            }
+        }
+    }
+    var descriptionText = ""
+    
     var managedObgectContext: NSManagedObjectContext!
     
     //MARK: - Actions
@@ -42,9 +57,14 @@ class LocationDetailTableViewController: UITableViewController {
     
     @IBAction func done() {
         let hud = HudView.hud(inView: navigationController!.view, animated: true)
-        hud.text = "Tagged"
-        
-        let location = Location(context: managedObgectContext)
+        let location: Location
+        if let temp = locationToEdit {
+            hud.text = "Updated"
+            location = temp
+        } else {
+            hud.text = "Tagged"
+            location = Location(context: managedObgectContext)
+        }
         
         location.locationDescription = descriptionTextView.text
         location.category = categoryName
@@ -103,7 +123,11 @@ class LocationDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descriptionTextView.text = ""
+        if let location = locationToEdit {
+            title = "Edit Location"
+        }
+        
+        descriptionTextView.text = descriptionText
         categoryLabel.text = categoryName
         
         latitudeLabel.text = String(format: "%.8f", coorditate.latitude)

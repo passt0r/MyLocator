@@ -58,6 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let tabBarViewControllers = tabBarController.viewControllers {
             let currentLocationViewController = tabBarViewControllers[0] as! CurrentLocationViewControler
             currentLocationViewController.managedObgectContext = managedObjectContext
+            
+            let navigationController = tabBarViewControllers[1] as! UINavigationController
+            let locationsViewController = navigationController.topViewController as! LocationsTableViewController
+            locationsViewController.managedObjectContext = managedObjectContext
+            
+            //thats fix bug with adding new element to CoreData before locationViewController loads
+            let _ = locationsViewController.view
         }
         listenForFatalCoreDataENotofication()
         return true

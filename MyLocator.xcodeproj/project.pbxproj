@@ -15,11 +15,12 @@
 		595E52E21EF8297B008134AD /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E52E01EF8297B008134AD /* Location+CoreDataProperties.swift */; };
 		5980454B1EEF39EE00A787DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5980454A1EEF39EE00A787DA /* AppDelegate.swift */; };
 		5980454D1EEF39EE00A787DA /* CurrentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5980454C1EEF39EE00A787DA /* CurrentLocationViewController.swift */; };
-		5980454F1EEF39EE00A787DA /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5980454E1EEF39EE00A787DA /* SecondViewController.swift */; };
 		598045521EEF39EE00A787DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 598045501EEF39EE00A787DA /* Main.storyboard */; };
 		598045541EEF39EE00A787DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598045531EEF39EE00A787DA /* Assets.xcassets */; };
 		598045571EEF39EE00A787DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 598045551EEF39EE00A787DA /* LaunchScreen.storyboard */; };
 		59C28CCE1EF47E7E000E0EC5 /* CategoryPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C28CCD1EF47E7E000E0EC5 /* CategoryPickerTableViewController.swift */; };
+		59C604751EF93797008EEAF2 /* LocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C604741EF93797008EEAF2 /* LocationsTableViewController.swift */; };
+		59C604771EF94EC6008EEAF2 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C604761EF94EC6008EEAF2 /* LocationCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,12 +33,13 @@
 		598045471EEF39EE00A787DA /* MyLocator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5980454A1EEF39EE00A787DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5980454C1EEF39EE00A787DA /* CurrentLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewController.swift; sourceTree = "<group>"; };
-		5980454E1EEF39EE00A787DA /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		598045511EEF39EE00A787DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		598045531EEF39EE00A787DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		598045561EEF39EE00A787DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		598045581EEF39EE00A787DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59C28CCD1EF47E7E000E0EC5 /* CategoryPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryPickerTableViewController.swift; sourceTree = "<group>"; };
+		59C604741EF93797008EEAF2 /* LocationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsTableViewController.swift; sourceTree = "<group>"; };
+		59C604761EF94EC6008EEAF2 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,17 +83,18 @@
 			isa = PBXGroup;
 			children = (
 				5980454A1EEF39EE00A787DA /* AppDelegate.swift */,
+				598045531EEF39EE00A787DA /* Assets.xcassets */,
+				59C28CCD1EF47E7E000E0EC5 /* CategoryPickerTableViewController.swift */,
 				5980454C1EEF39EE00A787DA /* CurrentLocationViewController.swift */,
-				592156631EF44CD400FD2C71 /* LocationDetailTableViewController.swift */,
+				595E52E31EF8471B008134AD /* DataModel */,
 				594FA8C91EF6BAFE0032FBB3 /* Functions.swift */,
 				590C509F1EF69DE800EBC79A /* HudView.swift */,
-				59C28CCD1EF47E7E000E0EC5 /* CategoryPickerTableViewController.swift */,
-				5980454E1EEF39EE00A787DA /* SecondViewController.swift */,
-				595E52E31EF8471B008134AD /* DataModel */,
-				598045501EEF39EE00A787DA /* Main.storyboard */,
-				598045531EEF39EE00A787DA /* Assets.xcassets */,
-				598045551EEF39EE00A787DA /* LaunchScreen.storyboard */,
 				598045581EEF39EE00A787DA /* Info.plist */,
+				598045551EEF39EE00A787DA /* LaunchScreen.storyboard */,
+				592156631EF44CD400FD2C71 /* LocationDetailTableViewController.swift */,
+				59C604741EF93797008EEAF2 /* LocationsTableViewController.swift */,
+				59C604761EF94EC6008EEAF2 /* LocationCell.swift */,
+				598045501EEF39EE00A787DA /* Main.storyboard */,
 			);
 			path = MyLocator;
 			sourceTree = "<group>";
@@ -169,12 +172,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5980454F1EEF39EE00A787DA /* SecondViewController.swift in Sources */,
+				59C604751EF93797008EEAF2 /* LocationsTableViewController.swift in Sources */,
 				595E52DE1EF82466008134AD /* DataModel.xcdatamodeld in Sources */,
 				592156641EF44CD400FD2C71 /* LocationDetailTableViewController.swift in Sources */,
 				590C50A01EF69DE800EBC79A /* HudView.swift in Sources */,
 				595E52E21EF8297B008134AD /* Location+CoreDataProperties.swift in Sources */,
 				594FA8CA1EF6BAFE0032FBB3 /* Functions.swift in Sources */,
+				59C604771EF94EC6008EEAF2 /* LocationCell.swift in Sources */,
 				5980454B1EEF39EE00A787DA /* AppDelegate.swift in Sources */,
 				595E52E11EF8297B008134AD /* Location+CoreDataClass.swift in Sources */,
 				59C28CCE1EF47E7E000E0EC5 /* CategoryPickerTableViewController.swift in Sources */,
