@@ -63,7 +63,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    func updateLocations() {
+    func clearAndUpdateLocations() {
         mapView.removeAnnotations(locations)
         
         let entity = Location.entity()
@@ -114,7 +114,7 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateLocations()
+        clearAndUpdateLocations()
         
         if !locations.isEmpty {
             showLocations()

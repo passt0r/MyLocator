@@ -18,7 +18,7 @@ private let dateFormatter: DateFormatter = {
     return formatter
 }()
 
-class LocationDetailTableViewController: UITableViewController {
+class LocationDetailTableViewController: UITableViewController{
     //MARK: - Outlets
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var categoryLabel: UILabel!
@@ -26,13 +26,14 @@ class LocationDetailTableViewController: UITableViewController {
     @IBOutlet weak var longtitudeLabel: UILabel!
     @IBOutlet weak var adressLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var addPhotoLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
     //MARK: - Properties
     var coorditate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var placemark: CLPlacemark?
     var categoryName = "No Category"
     var date = Date()
-    
     
     //called when perform prepare(for segue), after viewDidLoad, so didSet perform action
     var locationToEdit: Location? {
@@ -47,6 +48,17 @@ class LocationDetailTableViewController: UITableViewController {
         }
     }
     var descriptionText = ""
+    
+    var image: UIImage? {
+        didSet {
+            if let image = image {
+                aspectRatio = image.size.width/image.size.height
+                show(image: image)
+            }
+        }
+    }
+    let imageViewWidth: CGFloat = 260
+    var aspectRatio: CGFloat?
     
     var managedObgectContext: NSManagedObjectContext!
     
@@ -119,6 +131,13 @@ class LocationDetailTableViewController: UITableViewController {
         }
         descriptionTextView.resignFirstResponder()
     }
+    
+    func show(image: UIImage) {
+        imageView.image = image
+        imageView.isHidden = false
+        imageView.frame = CGRect(x: 10, y: 20, width: imageViewWidth, height: imageViewWidth/aspectRatio!)
+        addPhotoLabel.isHidden = true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,16 +172,23 @@ class LocationDetailTableViewController: UITableViewController {
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 0 {
+        
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
             return 88
-        } else if indexPath.section == 2 && indexPath.row == 2 {
+        case (1,_):
+            if imageView.isHidden {
+                return 44
+            } else {
+                return imageViewWidth/aspectRatio! + 40
+            }
+        case (2,2):
             adressLabel.frame.size = CGSize(width: view.bounds.size.width - 115,
                                             height: 10000)
             adressLabel.sizeToFit()
             adressLabel.frame.origin.x = view.bounds.size.width - adressLabel.frame.size.width - 15
             return adressLabel.frame.size.height + 20
-            
-        } else {
+        default:
             return 44
         }
     }
@@ -177,6 +203,9 @@ class LocationDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             descriptionTextView.becomeFirstResponder()
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            tableView.deselectRow(at: indexPath, animated: true)
+            pickPhoto()
         }
     }
     
@@ -195,5 +224,60 @@ class LocationDetailTableViewController: UITableViewController {
         categoryName = source.selectedCategoryName
         categoryLabel.text = categoryName
         
+    }
+}
+
+extension LocationDetailTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func takePhotoWithCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
+    func takePhotoFromLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func pickPhoto() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            showPhotoMenu()
+        } else {
+            takePhotoFromLibrary()
+        }
+    }
+    
+    func showPhotoMenu() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+            self.takePhotoWithCamera()
+        })
+        alertController.addAction(takePhotoAction)
+        
+        let chooseFromLibrary = UIAlertAction(title: "Choose From Library", style: .default, handler: {
+            _ in
+            self.takePhotoFromLibrary()
+        })
+        alertController.addAction(chooseFromLibrary)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        image = info[UIImagePickerControllerEditedImage] as? UIImage
+        tableView.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }

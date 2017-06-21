@@ -114,7 +114,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="87.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="(Description)" translatesAutoresizingMaskIntoConstraints="NO" id="0Qd-Nb-8Tt">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="onDrag" text="(Description)" translatesAutoresizingMaskIntoConstraints="NO" id="0Qd-Nb-8Tt">
                                                     <rect key="frame" x="15" y="10" width="290" height="68"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -168,6 +168,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qxy-AR-oyF">
+                                                    <rect key="frame" x="112" y="12" width="142" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="dc1-t5-fLo" firstAttribute="leading" secondItem="HeP-de-sNd" secondAttribute="leading" constant="15" id="ZMH-RR-W4D"/>
@@ -299,17 +303,19 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPhotoLabel" destination="dc1-t5-fLo" id="51b-jP-EC8"/>
                         <outlet property="adressLabel" destination="h6W-ZW-2Xn" id="b4H-R7-fIN"/>
                         <outlet property="categoryLabel" destination="joW-u8-nb2" id="nwM-34-kzB"/>
                         <outlet property="dateLabel" destination="n86-VF-npV" id="cPq-gd-wY2"/>
                         <outlet property="descriptionTextView" destination="0Qd-Nb-8Tt" id="Nxh-hH-YfN"/>
+                        <outlet property="imageView" destination="Qxy-AR-oyF" id="w0N-H5-CSs"/>
                         <outlet property="latitudeLabel" destination="DNR-bQ-gxK" id="ztw-ty-bLo"/>
                         <outlet property="longtitudeLabel" destination="Pr4-1y-Gob" id="hco-IX-Dqv"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TxD-0E-eLx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3812" y="0.0"/>
+            <point key="canvasLocation" x="3811.875" y="0.0"/>
         </scene>
         <!--Category Picker Table View Controller-->
         <scene sceneID="7xG-uM-h7L">
