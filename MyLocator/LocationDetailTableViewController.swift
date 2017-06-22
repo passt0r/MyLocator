@@ -62,6 +62,8 @@ class LocationDetailTableViewController: UITableViewController{
     
     var managedObgectContext: NSManagedObjectContext!
     
+    var observer: Any!
+    
     //MARK: - Actions
     @IBAction func cancel() {
         dismiss(animated: true, completion: nil)
@@ -138,9 +140,27 @@ class LocationDetailTableViewController: UITableViewController{
         imageView.frame = CGRect(x: 10, y: 20, width: imageViewWidth, height: imageViewWidth/aspectRatio!)
         addPhotoLabel.isHidden = true
     }
+    
+    func listenForBackgroundNotification() {
+        observer = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidEnterBackground, object: nil, queue: OperationQueue.main) {
+            [weak self] _ in
+            if let  strongSelf = self {
+                if strongSelf.presentedViewController != nil {
+                    strongSelf.dismiss(animated: false, completion: nil)
+                }
+                strongSelf.descriptionTextView.resignFirstResponder()
+            }
+        }
+    }
+    
+    deinit {
+        print("***Deinit \(self)")
+         NotificationCenter.default.removeObserver(observer)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        listenForBackgroundNotification()
         
         if let location = locationToEdit {
             title = "Edit Location"
