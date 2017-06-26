@@ -2,14 +2,13 @@
 //  Location+CoreDataProperties.swift
 //  MyLocator
 //
-//  Created by Dmytro Pasinchuk on 19.06.17.
+//  Created by Dmytro Pasinchuk on 26.06.17.
 //  Copyright © 2017 Dmytro Pasinchuk. All rights reserved.
 //
 
 import Foundation
 import CoreData
 import CoreLocation
-
 
 extension Location {
 
@@ -23,5 +22,6 @@ extension Location {
     @NSManaged public var locationDescription: String
     @NSManaged public var category: String
     @NSManaged public var placemark: CLPlacemark?
+    @NSManaged public var photoID: NSNumber?
 
 }

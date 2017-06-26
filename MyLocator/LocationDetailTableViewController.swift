@@ -52,7 +52,6 @@ class LocationDetailTableViewController: UITableViewController{
     var image: UIImage? {
         didSet {
             if let image = image {
-                aspectRatio = image.size.width/image.size.height
                 show(image: image)
             }
         }
@@ -78,6 +77,7 @@ class LocationDetailTableViewController: UITableViewController{
         } else {
             hud.text = "Tagged"
             location = Location(context: managedObgectContext)
+            location.photoID = nil
         }
         
         location.locationDescription = descriptionTextView.text
@@ -86,6 +86,20 @@ class LocationDetailTableViewController: UITableViewController{
         location.longtitude = coorditate.longitude
         location.date = date
         location.placemark = placemark
+        
+        if let image = image {
+            if !location.hasPhoto {
+                location.photoID = Location.nextPhotoID() as NSNumber
+            }
+            if let data = UIImageJPEGRepresentation(image, 0.5) {
+                
+                do {
+                    try data.write(to: location.photoURL, options: .atomic)
+                } catch  {
+                    print("Error writing file: \(error)")
+                }
+            }
+        }
         
         do {
             try managedObgectContext.save()
@@ -135,6 +149,8 @@ class LocationDetailTableViewController: UITableViewController{
     }
     
     func show(image: UIImage) {
+        aspectRatio = image.size.width/image.size.height
+        
         imageView.image = image
         imageView.isHidden = false
         imageView.frame = CGRect(x: 10, y: 20, width: imageViewWidth, height: imageViewWidth/aspectRatio!)
@@ -164,6 +180,11 @@ class LocationDetailTableViewController: UITableViewController{
         
         if let location = locationToEdit {
             title = "Edit Location"
+            if location.hasPhoto {
+                if let theImage = location.photoImage {
+                    show(image: theImage)
+                }
+            }
         }
         
         descriptionTextView.text = descriptionText
