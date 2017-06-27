@@ -115,25 +115,13 @@ class LocationDetailTableViewController: UITableViewController{
     //MARK: - Methods
     func string(from placemark: CLPlacemark) -> String {
         var text = ""
-        if let s = placemark.subThoroughfare {
-            text += s + " "
-        }
-        if let s = placemark.thoroughfare {
-            text += s + ", "
-        }
+        text.add(text: placemark.subThoroughfare)
+        text.add(text: placemark.thoroughfare, separatedBy: " ")
+        text.add(text: placemark.locality, separatedBy: ", ")
+        text.add(text: placemark.administrativeArea, separatedBy: ", ")
+        text.add(text: placemark.postalCode, separatedBy: " ")
+        text.add(text: placemark.country, separatedBy: ", ")
         
-        if let s = placemark.locality {
-            text += s + ", "
-        }
-        if let s = placemark.administrativeArea {
-            text += s + ", "
-        }
-        if let s = placemark.postalCode {
-            text += s + ", "
-        }
-        if let s = placemark.country {
-            text += s
-        }
         return text
     }
     func format(date: Date) -> String {
@@ -270,14 +258,16 @@ class LocationDetailTableViewController: UITableViewController{
 
 extension LocationDetailTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func takePhotoWithCamera() {
-        let imagePicker = UIImagePickerController()
+        let imagePicker = MyImagePickerController()
+        imagePicker.view.tintColor = view.tintColor
         imagePicker.sourceType = .camera
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true, completion: nil)
     }
     func takePhotoFromLibrary() {
-        let imagePicker = UIImagePickerController()
+        let imagePicker = MyImagePickerController()
+        imagePicker.view.tintColor = view.tintColor
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
