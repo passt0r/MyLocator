@@ -26,8 +26,6 @@
 	<string>This app lets you keep track interesting place which you have visited. It need access to your GPS coordinates for your location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Add photo to your locations</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

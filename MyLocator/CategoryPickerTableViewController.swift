@@ -38,6 +38,9 @@ class CategoryPickerTableViewController: UITableViewController {
                 break
             }
         }
+        tableView.backgroundColor = UIColor.black
+        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.2)
+        tableView.indicatorStyle = .white
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,7 +59,18 @@ class CategoryPickerTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return category.count
     }
-
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.black
+        
+        if let textLabel = cell.textLabel {
+            textLabel.textColor = UIColor.white
+            textLabel.highlightedTextColor = textLabel.textColor
+        }
+        let selectionView = UIView(frame: CGRect.zero)
+        selectionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        cell.selectedBackgroundView = selectionView
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
